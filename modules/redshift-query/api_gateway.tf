@@ -23,6 +23,13 @@ resource "aws_apigatewayv2_integration" "int" {
   integration_uri = aws_lambda_function.welcome_check_in_message_lambda.invoke_arn
 }
 
+# resource "aws_apigatewayv2_route" "route" {
+#   api_id              = aws_apigatewayv2_api.gateway.id
+#   route_key           = "GET /example"  # Corrige el formato de la ruta aquí
+#   target              = "integrations/${aws_apigatewayv2_integration.int.id}"
+#   authorization_type  = "JWT"
+#   authorizer_id       = aws_apigatewayv2_authorizer.auth.id
+# }
 resource "aws_apigatewayv2_route" "getUsers" {
   api_id    = aws_apigatewayv2_api.gateway.id
   route_key = "GET /get_users" # Correct the format of the route here
@@ -33,16 +40,16 @@ resource "aws_apigatewayv2_route" "getUsers" {
 
 resource "aws_apigatewayv2_route" "getCreditCards" {
   api_id    = aws_apigatewayv2_api.gateway.id
-  route_key = "GET /get_credit_cards" # Correct the format of the route here
-  target = "integrations/${aws_apigatewayv2_integration.int.id}"
+  route_key = "GET /get_credit_cards"
+  target    = "integrations/${aws_apigatewayv2_integration.int.id}"
   authorization_type = "JWT"
   authorizer_id = aws_apigatewayv2_authorizer.auth.id
 }
 
 resource "aws_apigatewayv2_route" "getItems" {
   api_id    = aws_apigatewayv2_api.gateway.id
-  route_key = "GET /get_items" # Correct the format of the route here
-  target = "integrations/${aws_apigatewayv2_integration.int.id}"
+  route_key = "GET /get_items"
+  target    = "integrations/${aws_apigatewayv2_integration.int.id}"
   authorization_type = "JWT"
   authorizer_id = aws_apigatewayv2_authorizer.auth.id
 }
@@ -97,7 +104,10 @@ resource "aws_api_gateway_integration" "check_in_api_integration" {
 resource "aws_api_gateway_deployment" "api_deployment" {
   rest_api_id = aws_api_gateway_rest_api.rest_api.id
   stage_name  = "DEV"
-
+  depends_on = [
+    aws_api_gateway_method.check_in_api_method,
+    aws_api_gateway_integration.check_in_api_integration
+  ]
   lifecycle {
     create_before_destroy = true
   }
