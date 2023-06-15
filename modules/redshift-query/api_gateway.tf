@@ -20,7 +20,7 @@ resource "aws_apigatewayv2_integration" "int" {
   integration_type   = "AWS_PROXY"
   connection_type    = "INTERNET"
   integration_method = "POST"
-  integration_uri    = aws_lambda_function.welcome_check_in_message_lambda.invoke_arn
+  integration_uri    = aws_lambda_function.redshift_query_lambda.invoke_arn
 }
 
 # resource "aws_apigatewayv2_route" "route" {
@@ -91,7 +91,7 @@ resource "aws_api_gateway_integration" "check_in_api_integration" {
   http_method             = aws_api_gateway_method.check_in_api_method.http_method
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
-  uri                     = aws_lambda_function.welcome_check_in_message_lambda.invoke_arn
+  uri                     = aws_lambda_function.redshift_query_lambda.invoke_arn
 }
 
 # resource "aws_api_gateway_method_response" "check_in_method_response" {
