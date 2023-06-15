@@ -22,6 +22,17 @@ git push -uf origin main
 
 - [ ] [Set up project integrations](https://gitlab.aws.dev/dsunitaw/cencosud-terraform-project/-/settings/integrations)
 
+## Build and deploy using terraform
+Add terraform.exe file at the same level as main.tf
+```
+> .\terraform.exe init
+> .\terraform.exe plan -var-file="vars.tfvars"
+> .\terraform.exe apply -var-file="vars.tfvars"
+```
+## Destroy stack after testing is completed
+```
+> .\terraform.exe destroy -var-file="vars.tfvars"
+```
 ## Collaborate with your team
 
 - [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
