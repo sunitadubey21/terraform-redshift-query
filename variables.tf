@@ -4,7 +4,10 @@ variable "aws_region" {
 
 variable "account_id" {
   type    = string
-  default = "350711180666"
+}
+
+variable "vpc_id" {
+  type = string
 }
 
 variable "tags" {

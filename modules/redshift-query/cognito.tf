@@ -1,19 +1,5 @@
-resource "aws_cognito_user_pool" "pool" {
-  name = "example_user_pool"
-}
-
-resource "aws_cognito_user_pool_client" "client" {
-  name                = "example_external_api"
-  user_pool_id        = aws_cognito_user_pool.pool.id
-  explicit_auth_flows = [
-    "ALLOW_USER_PASSWORD_AUTH",
-    "ALLOW_USER_SRP_AUTH",
-    "ALLOW_REFRESH_TOKEN_AUTH"
-  ]
-}
-
-resource "aws_cognito_user_pool" "cognito_user_pool" {
-  name = "cognitoUserPool"
+resource "aws_cognito_user_pool" "rest_api_user_pool" {
+  name = "cencosud-api-user-pool"
 
   email_verification_subject = "Your Verification Code"
   email_verification_message = "Please use the following code: {####}"
@@ -59,9 +45,12 @@ resource "aws_cognito_user_pool" "cognito_user_pool" {
   }
 }
 
-resource "aws_cognito_user_pool_client" "cencosud_user_pool_client" {
-  name                = "cencosudUserPoolClient"
-  explicit_auth_flows = ["ALLOW_USER_PASSWORD_AUTH", "ALLOW_REFRESH_TOKEN_AUTH"]
+resource "aws_cognito_user_pool_client" "rest_api_user_pool_client" {
+  name                = "cencosud-api-user-pool-client"
+  explicit_auth_flows = [
+    "ALLOW_USER_PASSWORD_AUTH",
+    "ALLOW_REFRESH_TOKEN_AUTH"
+  ]
 
-  user_pool_id = aws_cognito_user_pool.cognito_user_pool.id
+  user_pool_id = aws_cognito_user_pool.rest_api_user_pool.id
 }

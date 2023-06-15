@@ -1,0 +1,139 @@
+{
+  "resource": "/users",
+  "path": "/users",
+  "httpMethod": "GET",
+  "headers": {
+    "Accept": "*/*",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Authorization": "Bearer <id-token>",
+    "CloudFront-Forwarded-Proto": "https",
+    "CloudFront-Is-Desktop-Viewer": "true",
+    "CloudFront-Is-Mobile-Viewer": "false",
+    "CloudFront-Is-SmartTV-Viewer": "false",
+    "CloudFront-Is-Tablet-Viewer": "false",
+    "CloudFront-Viewer-ASN": "23860",
+    "CloudFront-Viewer-Country": "IN",
+    "Host": "qudu7hi3m1.execute-api.ap-south-1.amazonaws.com",
+    "Postman-Token": "8d34ba45-cb89-41b1-85cb-3760f62019ae",
+    "User-Agent": "PostmanRuntime/7.32.2",
+    "Via": "1.1 cf0af53e8cee02ae7cf85647f36ace1a.cloudfront.net (CloudFront)",
+    "X-Amz-Cf-Id": "YaBV5sRRBV1ZKr5iDPndzBFKRtrAO8S8A1gDt5qeLyrjsvY3W_q3mg==",
+    "X-Amzn-Trace-Id": "Root=1-648b6a98-6afc64eb147a889101f4d28e",
+    "X-Forwarded-For": "<user-ip>, <aws-ip e.g. 130.176.54.106>",
+    "X-Forwarded-Port": "443",
+    "X-Forwarded-Proto": "https"
+  },
+  "multiValueHeaders": {
+    "Accept": [
+      "*/*"
+    ],
+    "Accept-Encoding": [
+      "gzip, deflate, br"
+    ],
+    "Authorization": [
+      "Bearer <id-token>"
+    ],
+    "CloudFront-Forwarded-Proto": [
+      "https"
+    ],
+    "CloudFront-Is-Desktop-Viewer": [
+      "true"
+    ],
+    "CloudFront-Is-Mobile-Viewer": [
+      "false"
+    ],
+    "CloudFront-Is-SmartTV-Viewer": [
+      "false"
+    ],
+    "CloudFront-Is-Tablet-Viewer": [
+      "false"
+    ],
+    "CloudFront-Viewer-ASN": [
+      "23860"
+    ],
+    "CloudFront-Viewer-Country": [
+      "IN"
+    ],
+    "Host": [
+      "qudu7hi3m1.execute-api.ap-south-1.amazonaws.com"
+    ],
+    "Postman-Token": [
+      "8d34ba45-cb89-41b1-85cb-3760f62019ae"
+    ],
+    "User-Agent": [
+      "PostmanRuntime/7.32.2"
+    ],
+    "Via": [
+      "1.1 cf0af53e8cee02ae7cf85647f36ace1a.cloudfront.net (CloudFront)"
+    ],
+    "X-Amz-Cf-Id": [
+      "YaBV5sRRBV1ZKr5iDPndzBFKRtrAO8S8A1gDt5qeLyrjsvY3W_q3mg=="
+    ],
+    "X-Amzn-Trace-Id": [
+      "Root=1-648b6a98-6afc64eb147a889101f4d28e"
+    ],
+    "X-Forwarded-For": [
+      "<user-ip>, <aws-ip e.g. 130.176.54.106>"
+    ],
+    "X-Forwarded-Port": [
+      "443"
+    ],
+    "X-Forwarded-Proto": [
+      "https"
+    ]
+  },
+  "queryStringParameters": null,
+  "multiValueQueryStringParameters": null,
+  "pathParameters": null,
+  "stageVariables": null,
+  "requestContext": {
+    "resourceId": "ke960g",
+    "authorizer": {
+      "claims": {
+        "sub": "d4253e95-b66b-49a7-9d20-1f67aefe1f3c",
+        "email_verified": "false",
+        "iss": "https://cognito-idp.ap-south-1.amazonaws.com/ap-south-1_JM8J8G78q",
+        "cognito:username": "cencosud-user",
+        "origin_jti": "98691dd0-feda-482e-9f93-6732a36d55c3",
+        "aud": "168v7kbbaq3goou68vbq3q7qgm",
+        "event_id": "c70e97d6-a1b4-4ca3-be1c-de4297af45b3",
+        "token_use": "id",
+        "auth_time": "1686857319",
+        "name": "cencosud",
+        "exp": "Thu Jun 15 20:28:39 UTC 2023",
+        "iat": "Thu Jun 15 19:28:39 UTC 2023",
+        "jti": "2bf9ef32-2450-4dba-a434-5494aa1fbc10",
+        "email": "cencosud-user@email.com"
+      }
+    },
+    "resourcePath": "/users",
+    "httpMethod": "GET",
+    "extendedRequestId": "Gk2X5HdxhcwFW8Q=",
+    "requestTime": "15/Jun/2023:19:46:32 +0000",
+    "path": "/DEV/users",
+    "accountId": "121859831222",
+    "protocol": "HTTP/1.1",
+    "stage": "DEV",
+    "domainPrefix": "qudu7hi3m1",
+    "requestTimeEpoch": 1686858392646,
+    "requestId": "4e57b4b1-67ce-408d-81e4-833081c78a07",
+    "identity": {
+      "cognitoIdentityPoolId": null,
+      "accountId": null,
+      "cognitoIdentityId": null,
+      "caller": null,
+      "sourceIp": "<user-ip>",
+      "principalOrgId": null,
+      "accessKey": null,
+      "cognitoAuthenticationType": null,
+      "cognitoAuthenticationProvider": null,
+      "userArn": null,
+      "userAgent": "PostmanRuntime/7.32.2",
+      "user": null
+    },
+    "domainName": "qudu7hi3m1.execute-api.ap-south-1.amazonaws.com",
+    "apiId": "qudu7hi3m1"
+  },
+  "body": null,
+  "isBase64Encoded": false
+}

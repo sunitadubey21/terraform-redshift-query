@@ -1,15 +1,15 @@
+import collections
+import json
 import os
 import pprint
 import sys
+import time
+
+import boto3
+import botocore.session as bc
 
 # add the lib directory to the path
 sys.path.append(os.path.join(os.path.dirname(__file__), "lib"))
-
-import boto3
-import json
-import time
-import collections
-import botocore.session as bc
 
 __version__ = "2.0"
 
@@ -180,31 +180,6 @@ def query_redshift():
         return 'Failed'
 
 
-def publish_to_sns(message):
-    global platform_endpoint
-
-    try:
-        # Publish a message.
-        response = platform_endpoint.publish(
-            Subject='Redshift Query Monitoring Rule Notifications',
-            Message=message,
-            MessageStructure='string',
-            MessageAttributes={
-                'RedshiftQueryMonitoringRuleNotifications': {
-                    'StringValue': 'Redshift Query Monitoring Rule Notifications',
-                    'DataType': 'String'
-                }
-            }
-        )
-
-        print("Published message...")
-        return response
-
-    except:
-        print(' Failed to publish messages to SNS topic: exception %s' % sys.exc_info()[1])
-        return 'Failed'
-
-
 def lambda_handler(event, context):
     global client_redshift
     global platform_endpoint
@@ -229,16 +204,21 @@ def lambda_handler(event, context):
         # Set up the client
         client_redshift = session.client("redshift-data")
         print("Data API client successfully loaded")
-    except:
-        print('redshift-data session failed: Exception %s' % sys.exc_info()[1])
-
-    # Set up the SNS client resource
-    try:
-        sns = boto3.resource('sns')
-        platform_endpoint = sns.PlatformEndpoint('{sns_arn}'.format(sns_arn=sns_arn))
-
-    except:
-        print('SNS access failed: Exception %s' % sys.exc_info()[1])
+    except Exception as e:
+        print('redshift-data session failed: Exception ', e)
 
     # Execute the QMR query
     query_redshift()
+    print('event', event)
+    print('context', context)
+
+    return {
+        "statusCode": 200,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "body": json.dumps({
+            'path': event['path'],
+            'httpMethod': event['httpMethod']
+        })
+    }

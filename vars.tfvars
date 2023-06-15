@@ -1,7 +1,8 @@
-aws_region = "us-east-1"
+aws_region = "ap-south-1"
 
 # Global & Network
-account_id = ""
+account_id = "121859831222"
+vpc_id     = "vpc-0243cad6fe449e03d"
 
 #Project
 ceco        = ""
@@ -11,7 +12,7 @@ proyecto    = "redshift-query"
 pep         = "CG-CB-1952-AL" #CL-HI-RAW-DEV
 pais        = "cl"
 aplicacion  = "redshift-data"
-cuenta      = ""
+cuenta      = 1
 nombre      = "redshiftdata"
 # uunn                    = "data" 
 
