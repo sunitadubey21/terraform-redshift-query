@@ -1,5 +1,5 @@
 #module "cencosud_cognito" {
-  #source = "./modules/redshift-query/cognito"
+#source = "./modules/redshift-query/cognito"
 #}
 
 #module "util_layer" {

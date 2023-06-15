@@ -3,14 +3,14 @@ variable "aws_region" {
 }
 
 variable "account_id" {
-  type = string
+  type    = string
   default = "350711180666"
 }
 
 variable "tags" {
   type        = map(string)
   description = "Tags default Redshift"
-  default = {
+  default     = {
   }
 }
 
@@ -46,6 +46,6 @@ variable "cuenta" {
   type = number
 }
 
-variable "pep" {   
+variable "pep" {
   type = string
 }

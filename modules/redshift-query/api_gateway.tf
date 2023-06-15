@@ -1,5 +1,5 @@
 resource "aws_apigatewayv2_api" "gateway" {
-  name = "example_api"
+  name          = "example_api"
   protocol_type = "HTTP"
 }
 
@@ -16,11 +16,11 @@ resource "aws_apigatewayv2_authorizer" "auth" {
 }
 
 resource "aws_apigatewayv2_integration" "int" {
-  api_id           = aws_apigatewayv2_api.gateway.id
-  integration_type = "AWS_PROXY"
-  connection_type = "INTERNET"
+  api_id             = aws_apigatewayv2_api.gateway.id
+  integration_type   = "AWS_PROXY"
+  connection_type    = "INTERNET"
   integration_method = "POST"
-  integration_uri = aws_lambda_function.welcome_check_in_message_lambda.invoke_arn
+  integration_uri    = aws_lambda_function.welcome_check_in_message_lambda.invoke_arn
 }
 
 # resource "aws_apigatewayv2_route" "route" {
@@ -30,28 +30,29 @@ resource "aws_apigatewayv2_integration" "int" {
 #   authorization_type  = "JWT"
 #   authorizer_id       = aws_apigatewayv2_authorizer.auth.id
 # }
+
 resource "aws_apigatewayv2_route" "getUsers" {
-  api_id    = aws_apigatewayv2_api.gateway.id
-  route_key = "GET /get_users" # Correct the format of the route here
-  target = "integrations/${aws_apigatewayv2_integration.int.id}"
+  api_id             = aws_apigatewayv2_api.gateway.id
+  route_key          = "GET /get_users" # Correct the format of the route here
+  target             = "integrations/${aws_apigatewayv2_integration.int.id}"
   authorization_type = "JWT"
-  authorizer_id = aws_apigatewayv2_authorizer.auth.id
+  authorizer_id      = aws_apigatewayv2_authorizer.auth.id
 }
 
 resource "aws_apigatewayv2_route" "getCreditCards" {
-  api_id    = aws_apigatewayv2_api.gateway.id
-  route_key = "GET /get_credit_cards"
-  target    = "integrations/${aws_apigatewayv2_integration.int.id}"
+  api_id             = aws_apigatewayv2_api.gateway.id
+  route_key          = "GET /get_credit_cards"
+  target             = "integrations/${aws_apigatewayv2_integration.int.id}"
   authorization_type = "JWT"
-  authorizer_id = aws_apigatewayv2_authorizer.auth.id
+  authorizer_id      = aws_apigatewayv2_authorizer.auth.id
 }
 
 resource "aws_apigatewayv2_route" "getItems" {
-  api_id    = aws_apigatewayv2_api.gateway.id
-  route_key = "GET /get_items"
-  target    = "integrations/${aws_apigatewayv2_integration.int.id}"
+  api_id             = aws_apigatewayv2_api.gateway.id
+  route_key          = "GET /get_items"
+  target             = "integrations/${aws_apigatewayv2_integration.int.id}"
   authorization_type = "JWT"
-  authorizer_id = aws_apigatewayv2_authorizer.auth.id
+  authorizer_id      = aws_apigatewayv2_authorizer.auth.id
 }
 
 resource "aws_api_gateway_rest_api" "rest_api" {
@@ -104,7 +105,7 @@ resource "aws_api_gateway_integration" "check_in_api_integration" {
 resource "aws_api_gateway_deployment" "api_deployment" {
   rest_api_id = aws_api_gateway_rest_api.rest_api.id
   stage_name  = "DEV"
-  depends_on = [
+  depends_on  = [
     aws_api_gateway_method.check_in_api_method,
     aws_api_gateway_integration.check_in_api_integration
   ]

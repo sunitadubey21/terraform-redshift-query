@@ -30,7 +30,7 @@ resource "aws_secretsmanager_secret" "redshift_connection" {
 }
 
 resource "aws_secretsmanager_secret_version" "redshift_connection" {
-  secret_id = aws_secretsmanager_secret.redshift_connection.id
+  secret_id     = aws_secretsmanager_secret.redshift_connection.id
   secret_string = jsonencode({
     username            = aws_redshift_cluster.redshift_cluster.master_username
     password            = aws_redshift_cluster.redshift_cluster.master_password
