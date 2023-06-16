@@ -1,0 +1,99 @@
+{
+	"info": {
+		"_postman_id": "b9f5e1fe-6706-4181-8372-78f58cdb3c21",
+		"name": "aws api gateway",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12504702",
+		"_collection_link": "https://solar-shuttle-569022.postman.co/workspace/John-Deere~0d371361-094f-4f36-a10b-bbc45c05e7bd/collection/12504702-b9f5e1fe-6706-4181-8372-78f58cdb3c21?action=share&creator=12504702&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/users",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "items",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/items",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "credit cards",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/credit_cards",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"credit_cards"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJraWQiOiIxWlhxc1RmZklkWE9xY3l1XC9PRVkwU01yVFMrRHZWYk1EWnBWZXhMVGUxZz0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJkNDI1M2U5NS1iNjZiLTQ5YTctOWQyMC0xZjY3YWVmZTFmM2MiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC5hcC1zb3V0aC0xLmFtYXpvbmF3cy5jb21cL2FwLXNvdXRoLTFfSk04SjhHNzhxIiwiY29nbml0bzp1c2VybmFtZSI6ImNlbmNvc3VkLXVzZXIiLCJvcmlnaW5fanRpIjoiZGNmOTU4NTItZGQ3ZS00NzlmLTg5N2ItYTAzMjFjYWEyYTkwIiwiYXVkIjoiMTY4djdrYmJhcTNnb291Njh2YnEzcTdxZ20iLCJldmVudF9pZCI6IjY3YzFlMzg3LTdiYmEtNGQzNy04NjgyLTZmZDA1NmIwZDFmNyIsInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNjg2ODU5MTg5LCJuYW1lIjoiY2VuY29zdWQiLCJleHAiOjE2ODY4NjI3ODksImlhdCI6MTY4Njg1OTE4OSwianRpIjoiNWFiMjc3NjAtOTJlNC00MGZlLWEzZjMtNzlhYWJlOWIxMTI0IiwiZW1haWwiOiJzbmlnZGhhanlvdGkuY29tbW9uK2NlbmNvc3VkQGdtYWlsLmNvbSJ9.AEaTKvKOjsPiO0sLIKnHiqRxU1vTyUEe69tdxa8nkgIXqR57v1aQbkn1kvn5O-uguejHE_zcy4qJ1TMgqhaNZZTCVg8pOzZ7Xz-EYvyMdKH66iT2LRhDF7bsuip7CvKtrcm-zRhZRS7qjsE_c7gAivDLJstZt7qVTBPH1Hj-thVxn_NHpfmKFs7uvil4Q6BoQFJs_MVYCdgUzx5mE61iyh5INEzu9zbM09E_wCn9jc6EG01cu6SzuIwnGNWT2fJm1uMbx8kcMyFomqiqKWPEdZZfCjaexP36BY4gskW1oue9li6QK8cu8-yuT8G_bUx7ETUSoy71Mn9Zqb-gWD0AfA",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "https://qudu7hi3m1.execute-api.ap-south-1.amazonaws.com/DEV",
+			"type": "string"
+		}
+	]
+}
