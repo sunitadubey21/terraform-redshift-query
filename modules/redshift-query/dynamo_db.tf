@@ -26,7 +26,7 @@ resource "aws_dynamodb_table_item" "users_query" {
 
   item = <<-ITEM
     {
-      "full_api_url": {"S": "apig.aws.com/users"},
+      "full_api_url": {"S": "ipg7egro14.execute-api.ap-south-1.amazonaws.com/users"},
       "redshift_query": {"S": "SELECT * FROM USERS"}
     }
   ITEM

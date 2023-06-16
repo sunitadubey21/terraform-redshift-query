@@ -1,29 +1,52 @@
-### Register User
+### Generating token
 
-```
+```shell
+# example values
+CLIENT_ID='1jvqgtiqdc8c46vf5hdjciusg9'
+USER_NAME='cencosud-uid-1'
+PASSWORD='@Password1234'
+NAME='Cencosud Cencosud'
+EMAIL='cencosud-uid-1@cencosud.com'
+POOL_ID='ap-south-1_zjMEZMtMo'
+
+# register user
 aws cognito-idp sign-up \
   --client-id ${CLIENT_ID} \
   --username ${USER_NAME} \
-  --password ${PASSWORD} \ 
+  --password ${PASSWORD} \
   --user-attributes Name=name,Value=${NAME} Name=email,Value=${EMAIL}
-```
 
-```
+# verify user
 aws cognito-idp admin-confirm-sign-up \
   --user-pool-id ${POOL_ID} \
   --username ${USER_NAME}
-```
 
-
-### Get Token
-
-```
+# Get Token
 aws cognito-idp initiate-auth \
  --client-id ${CLIENT_ID} \
  --auth-flow USER_PASSWORD_AUTH \
  --auth-parameters USERNAME=${USER_NAME},PASSWORD=${PASSWORD} \
  --query 'AuthenticationResult.IdToken' \
  --output text
+```
+
+### Redshift query
+```shell
+# Create query
+QUERY_ID=$(aws redshift-data execute-statement \
+  --cluster-identifier tf-redshift-cluster \
+  --database mydb \
+  --sql 'SELECT id, "name", email FROM public.users' \
+  --query 'Id' \
+  --output text)
+
+# Describing statement for status
+aws redshift-data describe-statement \
+  --id ${QUERY_ID}
+  
+# Getting result
+aws redshift-data get-statement-result \
+  --id ${QUERY_ID}
 ```
 
 ### Requirements related to Lambda and DynamoDB

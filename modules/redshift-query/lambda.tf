@@ -30,7 +30,21 @@ resource "aws_iam_role" "rest_api_lambda_role" {
           Effect   = "Allow"
           # Here we have used same account. The account id will change if cross account redshift access needed
           Resource = "arn:aws:iam::${data.aws_caller_identity.this.account_id}:role/cencosud-cross-account-redshift-role"
-        },
+        }
+      ]
+    })
+  }
+
+  inline_policy {
+    name   = "dynamo-db-access"
+    policy = jsonencode({
+      Version   = "2012-10-17"
+      Statement = [
+        {
+          Action   = "dynamodb:GetItem"
+          Effect   = "Allow"
+          Resource = aws_dynamodb_table.rest_api_dynamo_db_table.arn
+        }
       ]
     })
   }

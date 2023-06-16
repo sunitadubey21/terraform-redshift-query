@@ -1,4 +1,4 @@
-data "aws_subnets" "private-subnets" {
+data "aws_subnets" "public-subnets" {
   filter {
     name   = "vpc-id"
     values = [var.vpc_id]
@@ -7,7 +7,7 @@ data "aws_subnets" "private-subnets" {
   filter {
     name   = "tag:connectivity"
     values = [
-      "private"
+      "public"
     ]
   }
 }

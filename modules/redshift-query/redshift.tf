@@ -36,11 +36,11 @@ resource "aws_security_group" "redshift_cluster_sg" {
 
 resource "aws_redshift_subnet_group" "redshift_cluster_subnet_group" {
   name       = "cencosud-redshift-cluster-subnet-group"
-  subnet_ids = data.aws_subnets.private-subnets.ids
+  subnet_ids = data.aws_subnets.public-subnets.ids
 }
 
 resource "aws_redshift_cluster" "redshift_cluster" {
-  cluster_identifier        = "tf-redshift-cluster"
+  cluster_identifier        = "cencosud-redshift-cluster"
   database_name             = "mydb"
   master_username           = "admin"
   master_password           = random_password.password.result
@@ -53,6 +53,7 @@ resource "aws_redshift_cluster" "redshift_cluster" {
   vpc_security_group_ids    = [
     aws_security_group.redshift_cluster_sg.id
   ]
+  publicly_accessible = true
 }
 
 resource "aws_secretsmanager_secret" "redshift_connection" {

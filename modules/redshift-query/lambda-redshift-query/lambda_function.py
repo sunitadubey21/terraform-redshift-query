@@ -27,9 +27,8 @@ ASSUME_ROLE_ARN = get_env_var('ASSUME_ROLE_ARN')
 
 
 def dynamo_db_query(_full_api_url):
-    session = boto3.Session(profile_name='joe-terraform-role')
-    dynamodb_resource = session.resource('dynamodb')
-    dynamodb_table: dynamodb.Table = dynamodb_resource.Table(DYNAMODB_TABLE)
+    dynamodb_resource = boto3.resource('dynamodb')
+    dynamodb_table = dynamodb_resource.Table(DYNAMODB_TABLE)
 
     try:
         response = dynamodb_table.get_item(
@@ -174,12 +173,14 @@ def lambda_handler(event, context):
     request_id = request_context['requestId']
 
     redshift_query = dynamo_db_query(full_api_url)
-    objects_list = query_redshift(request_id, redshift_query)
+    # objects_list = query_redshift(request_id, redshift_query)
 
     return {
         "statusCode": 200,
         "headers": {
             "Content-Type": "application/json"
         },
-        "body": json.dumps(objects_list)
+        "body": json.dumps({
+            'query': redshift_query
+        })
     }
