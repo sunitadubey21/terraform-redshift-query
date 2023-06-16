@@ -12,6 +12,10 @@ data "aws_subnets" "private-subnets" {
   }
 }
 
+data "aws_region" "this" {}
+
+data "aws_caller_identity" "this" {}
+
 data "http" "my-public-ip" {
   url = "https://ipv4.icanhazip.com"
 }

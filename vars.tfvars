@@ -1,8 +1,7 @@
 aws_region = "ap-south-1"
 
 # Global & Network
-account_id = "121859831222"
-vpc_id     = "vpc-0243cad6fe449e03d"
+vpc_id     = "vpc-0059676aa2c7aae89"
 
 #Project
 ceco        = ""

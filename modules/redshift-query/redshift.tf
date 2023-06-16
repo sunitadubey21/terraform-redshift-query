@@ -6,7 +6,7 @@ resource "random_password" "password" {
 }
 
 resource "aws_security_group" "redshift_cluster_sg" {
-  name   = "tf-redshift-cluster-sg"
+  name   = "cencosud-redshift-cluster-sg"
   vpc_id = var.vpc_id
 
   ingress {
@@ -14,15 +14,7 @@ resource "aws_security_group" "redshift_cluster_sg" {
     protocol    = "tcp"
     from_port   = 5439
     to_port     = 5439
-    cidr_blocks = ["${chomp(data.http.my-public-ip.body)}/32"]
-  }
-
-  ingress {
-    description     = "Allow TCP traffic from lambda to redshift"
-    protocol        = "tcp"
-    from_port       = 5439
-    to_port         = 5439
-    security_groups = [aws_security_group.rest_api_lambda_sg.id]
+    cidr_blocks = ["${chomp(data.http.my-public-ip.response_body)}/32"]
   }
 
   ingress {
@@ -43,7 +35,7 @@ resource "aws_security_group" "redshift_cluster_sg" {
 }
 
 resource "aws_redshift_subnet_group" "redshift_cluster_subnet_group" {
-  name       = "tf-redshift-cluster-subnet-group"
+  name       = "cencosud-redshift-cluster-subnet-group"
   subnet_ids = data.aws_subnets.private-subnets.ids
 }
 
@@ -65,7 +57,7 @@ resource "aws_redshift_cluster" "redshift_cluster" {
 
 resource "aws_secretsmanager_secret" "redshift_connection" {
   description = "Redshift connect details"
-  name        = "tf-redshift-cluster-secret"
+  name        = "cencosud-redshift-cluster-secret"
 }
 
 resource "aws_secretsmanager_secret_version" "redshift_connection" {

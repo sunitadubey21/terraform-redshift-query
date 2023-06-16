@@ -2,10 +2,6 @@ variable "aws_region" {
   default = "us-east-1"
 }
 
-variable "account_id" {
-  type    = string
-}
-
 variable "vpc_id" {
   type = string
 }
@@ -13,8 +9,7 @@ variable "vpc_id" {
 variable "tags" {
   type        = map(string)
   description = "Tags default Redshift"
-  default     = {
-  }
+  default     = {}
 }
 
 variable "nombre" {

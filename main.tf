@@ -9,8 +9,6 @@
 module "redshift_layer" {
   source = "./modules/redshift-query"
 
-  aws_region = var.aws_region
-  account_id = var.account_id
   vpc_id     = var.vpc_id
 }
 
