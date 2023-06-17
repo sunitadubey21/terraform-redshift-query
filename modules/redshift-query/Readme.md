@@ -34,9 +34,10 @@ aws cognito-idp initiate-auth \
 ```shell
 # Create query
 QUERY_ID=$(aws redshift-data execute-statement \
-  --cluster-identifier tf-redshift-cluster \
+  --cluster-identifier cencosud-redshift-cluster \
   --database mydb \
-  --sql 'SELECT id, "name", email FROM public.users' \
+  --db-user admin \
+  --sql 'SELECT identifier, "name", email FROM public.users' \
   --query 'Id' \
   --output text)
 

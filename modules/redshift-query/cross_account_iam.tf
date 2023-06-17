@@ -16,12 +16,18 @@ resource "aws_iam_role" "cross_account_redshift_role" {
   })
 
   inline_policy {
-    name   = "redshift-data-access"
+    name   = "redshift-query-access"
     policy = jsonencode({
       Version   = "2012-10-17"
       Statement = [
         {
           Action   = "redshift-data:*"
+          Effect   = "Allow"
+          # TODO: Will fix the access later. Need to use granular access policy
+          Resource = "*"
+        },
+        {
+          Action   = "redshift:*"
           Effect   = "Allow"
           # TODO: Will fix the access later. Need to use granular access policy
           Resource = "*"

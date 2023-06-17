@@ -72,13 +72,15 @@ resource "aws_lambda_function" "redshift_query_lambda" {
   role          = aws_iam_role.rest_api_lambda_role.arn
   handler       = "lambda_function.lambda_handler"
   runtime       = "python3.10"
+  timeout       = 60
 
   environment {
     variables = {
-      REDSHIFT_CLUSTER  = aws_redshift_cluster.redshift_cluster.cluster_identifier
-      REDSHIFT_DATABASE = aws_redshift_cluster.redshift_cluster.database_name
-      DYNAMODB_TABLE    = aws_dynamodb_table.rest_api_dynamo_db_table.name
-      ASSUME_ROLE_ARN   = aws_iam_role.cross_account_redshift_role.arn
+      REDSHIFT_CLUSTER       = aws_redshift_cluster.redshift_cluster.cluster_identifier
+      REDSHIFT_DATABASE      = aws_redshift_cluster.redshift_cluster.database_name
+      REDSHIFT_DATABASE_USER = aws_redshift_cluster.redshift_cluster.master_username
+      DYNAMODB_TABLE         = aws_dynamodb_table.rest_api_dynamo_db_table.name
+      ASSUME_ROLE_ARN        = aws_iam_role.cross_account_redshift_role.arn
     }
   }
 }

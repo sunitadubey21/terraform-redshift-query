@@ -3,18 +3,14 @@ import json
 import logging
 import os
 import pprint
-import sys
 import time
 
 import boto3
-from boto3 import dynamodb
 from botocore.exceptions import ClientError
 
 __version__ = "2.0"
 logger = logging.getLogger(__name__)
 
-
-##################
 
 def get_env_var(name):
     return os.environ[name] if name in os.environ else None
@@ -22,11 +18,12 @@ def get_env_var(name):
 
 REDSHIFT_CLUSTER = get_env_var('REDSHIFT_CLUSTER')
 REDSHIFT_DATABASE = get_env_var('REDSHIFT_DATABASE')
+REDSHIFT_DATABASE_USER = get_env_var('REDSHIFT_DATABASE_USER')
 DYNAMODB_TABLE = get_env_var('DYNAMODB_TABLE')
 ASSUME_ROLE_ARN = get_env_var('ASSUME_ROLE_ARN')
 
 
-def dynamo_db_query(_full_api_url):
+def query_dynamo_db(_full_api_url):
     dynamodb_resource = boto3.resource('dynamodb')
     dynamodb_table = dynamodb_resource.Table(DYNAMODB_TABLE)
 
@@ -48,8 +45,7 @@ def dynamo_db_query(_full_api_url):
         return response['Item']['redshift_query']
 
 
-# Use Data API to obtain credentials
-def execute_api_sql(_request_id, queries, db_cluster=None, db_workgroup=None, db_user=None):
+def query_redshift(_request_id, queries, db_cluster=None, db_workgroup=None):
     sts_client = boto3.client('sts')
     assumed_role_object = sts_client.assume_role(
         RoleArn=ASSUME_ROLE_ARN,
@@ -64,14 +60,13 @@ def execute_api_sql(_request_id, queries, db_cluster=None, db_workgroup=None, db
         aws_session_token=credentials['SessionToken'],
     )
 
-    # New process - use Data API with temporary credentials
     try:
         if db_cluster is not None:
             logger.info("Connecting to cluster: " + db_cluster)
             response = redshift_data_client.execute_statement(
                 ClusterIdentifier=db_cluster,
                 Database=REDSHIFT_DATABASE,
-                DbUser=db_user,
+                DbUser=REDSHIFT_DATABASE_USER,
                 Sql=queries,
                 StatementName="QMRNotificationUtility-v%s" % __version__,
                 WithEvent=False
@@ -79,13 +74,14 @@ def execute_api_sql(_request_id, queries, db_cluster=None, db_workgroup=None, db
         elif db_workgroup is not None:
             logger.info("Connecting to workgroup: " + db_workgroup)
             response = redshift_data_client.execute_statement(
-                WorkgroupName=db_workgroup,  # Required for serverless
+                WorkgroupName=db_workgroup,
                 Database=REDSHIFT_DATABASE,
                 Sql=queries,
                 StatementName="QMRNotificationUtility-v%s" % __version__,
                 WithEvent=False
             )
         else:
+            logger.warning("Neither DB cluster or workgroup specified")
             return None
 
         response_id = response['Id']
@@ -101,69 +97,43 @@ def execute_api_sql(_request_id, queries, db_cluster=None, db_workgroup=None, db
 
             response_data = redshift_data_client.describe_statement(Id=response_id)
 
-            pprint.pprint(response_data)
-
             if response_data['Status'] == 'FINISHED':
                 statement_finished = True
             elif response_data['Status'] == 'FAILED':
-                # logger.info(json.dumps(response_data, indent=4,default=str))
                 logger.error(response_data)
                 statement_finished = True
             else:
-                # logger.info("Statement status: " + response_data['Status'])
                 logger.warning(response_data['Status'])
 
         # Now get the results
         result_rows = response_data["ResultRows"]
         has_results = response_data["HasResultSet"]
 
-        if result_rows > 0 and has_results == True:
+        results = []
+
+        # For response schema https://docs.aws.amazon.com/redshift-data/latest/APIReference/API_GetStatementResult.html
+        # TODO: Haven't implemented cursor with NextToken
+        if result_rows > 0 and has_results:
             # Return the data
             query_results = redshift_data_client.get_statement_result(
                 Id=response_id
             )
-            return query_results["Records"]
+            column_metadata = query_results['ColumnMetadata']
+            query_column_labels = list(map(lambda x: x['label'], column_metadata))
 
-        else:
-            return None
+            for row in query_results["Records"]:
+                out_row = collections.OrderedDict()
+                for idx, column in enumerate(row):
+                    column_name = query_column_labels[idx]
+                    if 'isNull' in column:
+                        out_row[column_name] = None
+                    else:
+                        out_row[column_name] = next(iter(column.values()))
+                results.append(out_row)
+
+        return results
     except Exception as e:
-        logger.error('Redshift Connection Failed: exception %s' % sys.exc_info()[1])
-        raise e
-
-
-def query_redshift(_request_id, _sql_query):
-    try:
-        # Use Data API function to connect to Redshift
-        logger.info("Connecting to Redshift")
-        result_rows = execute_api_sql(_request_id, _sql_query, db_cluster=REDSHIFT_CLUSTER)
-
-        objects_list = []
-
-        if result_rows is None or len(result_rows) == 0:
-            logger.debug("No results from QMR query")
-            return objects_list
-
-        # Get the results from the returned dictionary
-        # TODO: Update rows
-        for row in result_rows:
-            logger.info(row)
-            userid, query, service_class, rule, action, recordtime = row
-            d = collections.OrderedDict()
-            d['clusterid'] = REDSHIFT_CLUSTER
-            d['database'] = REDSHIFT_DATABASE
-            d['userid'] = userid
-            d['query'] = query
-            d['service_class'] = service_class
-            d['rule'] = rule
-            d['action'] = action
-            d['recordtime'] = recordtime  # --.isoformat()
-
-            objects_list.append(d)
-
-        logger.debug('Completed Successfully')
-        return objects_list
-    except Exception as e:
-        logger.error('Query Failed: exception %s' % e)
+        logger.error('Redshift Connection Failed: exception %s' % e)
         raise e
 
 
@@ -172,15 +142,13 @@ def lambda_handler(event, context):
     full_api_url = '{}{}'.format(request_context['domainName'], request_context['resourcePath'])
     request_id = request_context['requestId']
 
-    redshift_query = dynamo_db_query(full_api_url)
-    # objects_list = query_redshift(request_id, redshift_query)
+    redshift_query = query_dynamo_db(full_api_url)
+    results = query_redshift(request_id, redshift_query, db_cluster=REDSHIFT_CLUSTER)
 
     return {
         "statusCode": 200,
         "headers": {
             "Content-Type": "application/json"
         },
-        "body": json.dumps({
-            'query': redshift_query
-        })
+        "body": json.dumps(results)
     }

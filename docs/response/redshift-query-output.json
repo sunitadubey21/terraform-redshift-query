@@ -1,0 +1,71 @@
+{
+  "Records": [
+    [
+      {
+        "longValue": 1
+      },
+      {
+        "stringValue": "John"
+      },
+      {
+        "stringValue": "john@doe.com"
+      }
+    ],
+    [
+      {
+        "longValue": 2
+      },
+      {
+        "stringValue": "Emily"
+      },
+      {
+        "stringValue": "emily@doe.com"
+      }
+    ]
+  ],
+  "ColumnMetadata": [
+    {
+      "isCaseSensitive": false,
+      "isCurrency": false,
+      "isSigned": true,
+      "label": "identifier",
+      "length": 0,
+      "name": "identifier",
+      "nullable": 0,
+      "precision": 10,
+      "scale": 0,
+      "schemaName": "public",
+      "tableName": "users",
+      "typeName": "serial"
+    },
+    {
+      "isCaseSensitive": true,
+      "isCurrency": false,
+      "isSigned": false,
+      "label": "name",
+      "length": 0,
+      "name": "name",
+      "nullable": 0,
+      "precision": 256,
+      "scale": 0,
+      "schemaName": "public",
+      "tableName": "users",
+      "typeName": "varchar"
+    },
+    {
+      "isCaseSensitive": true,
+      "isCurrency": false,
+      "isSigned": false,
+      "label": "email",
+      "length": 0,
+      "name": "email",
+      "nullable": 1,
+      "precision": 256,
+      "scale": 0,
+      "schemaName": "public",
+      "tableName": "users",
+      "typeName": "varchar"
+    }
+  ],
+  "TotalNumRows": 2
+}
