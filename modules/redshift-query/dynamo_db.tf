@@ -20,14 +20,16 @@ resource "aws_dynamodb_table" "rest_api_dynamo_db_table" {
   }
 }
 
-resource "aws_dynamodb_table_item" "users_query" {
+resource "aws_dynamodb_table_item" "redshift_query" {
+  for_each = local.reshift_queries
+
   table_name = aws_dynamodb_table.rest_api_dynamo_db_table.name
   hash_key   = aws_dynamodb_table.rest_api_dynamo_db_table.hash_key
 
   item = <<-ITEM
     {
-      "full_api_url": {"S": "ipg7egro14.execute-api.ap-south-1.amazonaws.com/users"},
-      "redshift_query": {"S": "SELECT * FROM USERS"}
+      "full_api_url": {"S": "${aws_api_gateway_deployment.api_deployment.rest_api_id}.execute-api.${data.aws_region.this.name}.amazonaws.com/${each.key}"},
+      "redshift_query": {"S": "${each.value}"}
     }
   ITEM
 }

@@ -8,6 +8,7 @@ resource "aws_iam_role" "cross_account_redshift_role" {
         Action    = "sts:AssumeRole"
         Effect    = "Allow"
         Principal = {
+          # Here we have used same account. The account id will change if cross account redshift access needed
           AWS = "arn:aws:iam::${data.aws_caller_identity.this.account_id}:role/cencosud-api-lambda-role"
         }
       },

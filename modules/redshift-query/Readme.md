@@ -2,12 +2,12 @@
 
 ```shell
 # example values
-CLIENT_ID='1jvqgtiqdc8c46vf5hdjciusg9'
+CLIENT_ID='5u0tpifcvdd6iaavnjhfh9v1c1'
 USER_NAME='cencosud-uid-1'
 PASSWORD='@Password1234'
 NAME='Cencosud Cencosud'
 EMAIL='cencosud-uid-1@cencosud.com'
-POOL_ID='ap-south-1_zjMEZMtMo'
+POOL_ID='ap-south-1_zqs2uXBM6'
 
 # register user
 aws cognito-idp sign-up \

@@ -5,6 +5,11 @@ resource "random_password" "password" {
   override_special = "!$%&*()-_=+[]{}<>:?"
 }
 
+resource "random_string" "secret_name_suffix" {
+  length  = 6
+  special = false
+}
+
 resource "aws_security_group" "redshift_cluster_sg" {
   name   = "cencosud-redshift-cluster-sg"
   vpc_id = var.vpc_id
@@ -39,6 +44,8 @@ resource "aws_redshift_subnet_group" "redshift_cluster_subnet_group" {
   subnet_ids = data.aws_subnets.public-subnets.ids
 }
 
+# For permission
+# https://docs.aws.amazon.com/redshift/latest/dg/r_SVV_RELATION_PRIVILEGES.html
 resource "aws_redshift_cluster" "redshift_cluster" {
   cluster_identifier        = "cencosud-redshift-cluster"
   database_name             = "mydb"
@@ -57,8 +64,9 @@ resource "aws_redshift_cluster" "redshift_cluster" {
 }
 
 resource "aws_secretsmanager_secret" "redshift_connection" {
-  description = "Redshift connect details"
-  name        = "cencosud-redshift-cluster-secret"
+  description             = "Redshift connect details"
+  name                    = "cencosud-redshift-cluster-secret-${random_string.secret_name_suffix.result}"
+  recovery_window_in_days = 0
 }
 
 resource "aws_secretsmanager_secret_version" "redshift_connection" {

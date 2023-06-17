@@ -1,7 +1,7 @@
 aws_region = "ap-south-1"
 
 # Global & Network
-vpc_id     = "vpc-0059676aa2c7aae89"
+vpc_id     = "vpc-08ff2892616ca8c58"
 
 #Project
 ceco        = ""
