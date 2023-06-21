@@ -1,7 +1,7 @@
-aws_region = "ap-south-1"
+aws_region = "us-east-1"
 
 # Global & Network
-vpc_id     = "vpc-08ff2892616ca8c58"
+vpc_id     = " "
 
 #Project
 ceco        = ""

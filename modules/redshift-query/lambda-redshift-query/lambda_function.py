@@ -30,7 +30,7 @@ def query_dynamo_db(_full_api_url):
     try:
         response = dynamodb_table.get_item(
             Key={'full_api_url': _full_api_url},
-            AttributesToGet=['redshift_query']
+            AttributesToGet=['redshift_query','redshift_user']
         )
     except ClientError as err:
         logger.error(
@@ -42,10 +42,10 @@ def query_dynamo_db(_full_api_url):
         )
         raise err
     else:
-        return response['Item']['redshift_query']
+        return response['Item']['redshift_query'], response['Item']['redshift_user']
 
 
-def query_redshift(_request_id, queries, db_cluster=None, db_workgroup=None):
+def query_redshift(_request_id, queries, user, db_cluster=None, db_workgroup=None):
     sts_client = boto3.client('sts')
     assumed_role_object = sts_client.assume_role(
         RoleArn=ASSUME_ROLE_ARN,
@@ -66,7 +66,7 @@ def query_redshift(_request_id, queries, db_cluster=None, db_workgroup=None):
             response = redshift_data_client.execute_statement(
                 ClusterIdentifier=db_cluster,
                 Database=REDSHIFT_DATABASE,
-                DbUser=REDSHIFT_DATABASE_USER,
+                DbUser=user, #REDSHIFT_DATABASE_USER,
                 Sql=queries,
                 StatementName="QMRNotificationUtility-v%s" % __version__,
                 WithEvent=False
@@ -142,8 +142,8 @@ def lambda_handler(event, context):
     full_api_url = '{}{}'.format(request_context['domainName'], request_context['resourcePath'])
     request_id = request_context['requestId']
 
-    redshift_query = query_dynamo_db(full_api_url)
-    results = query_redshift(request_id, redshift_query, db_cluster=REDSHIFT_CLUSTER)
+    redshift_query, redshift_user = query_dynamo_db(full_api_url)
+    results = query_redshift(request_id, redshift_query, redshift_user, db_cluster=REDSHIFT_CLUSTER)
 
     return {
         "statusCode": 200,

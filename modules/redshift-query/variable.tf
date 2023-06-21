@@ -5,7 +5,7 @@ locals {
     "items" = ["GET"]
   }
 
-  reshift_queries = {
+  redshift_queries = {
     "users" = "SELECT * FROM USERS"
     "credit_cards" = "SELECT * FROM CREDIT_CARDS"
     "items" = "SELECT * FROM ITEMS"

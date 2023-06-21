@@ -24,13 +24,13 @@ resource "aws_iam_role" "cross_account_redshift_role" {
           Action   = "redshift-data:*"
           Effect   = "Allow"
           # TODO: Will fix the access later. Need to use granular access policy
-          Resource = "*"
+          Resource = aws_redshift_cluster.redshift_cluster.arn
         },
         {
           Action   = "redshift:*"
           Effect   = "Allow"
           # TODO: Will fix the access later. Need to use granular access policy
-          Resource = "*"
+          Resource = aws_redshift_cluster.redshift_cluster.arn
         },
       ]
     })
