@@ -2,7 +2,7 @@
 resource "random_password" "password" {
   length           = 16
   special          = true
-  override_special = "!$%&*()-_=+[]{}<>:?"
+  override_special = "!$%&*()-_=+[]{}<>:?1"
 }
 
 resource "random_string" "secret_name_suffix" {
