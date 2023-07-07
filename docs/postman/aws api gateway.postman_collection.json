@@ -1,17 +1,28 @@
 {
 	"info": {
-		"_postman_id": "b9f5e1fe-6706-4181-8372-78f58cdb3c21",
+		"_postman_id": "f042a988-8e24-4a1a-955c-5d98482e5eb7",
 		"name": "aws api gateway",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "12504702",
-		"_collection_link": "https://solar-shuttle-569022.postman.co/workspace/John-Deere~0d371361-094f-4f36-a10b-bbc45c05e7bd/collection/12504702-b9f5e1fe-6706-4181-8372-78f58cdb3c21?action=share&creator=12504702&source=collection_link"
+		"_exporter_id": "23723416"
 	},
 	"item": [
 		{
 			"name": "users",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "{{url}}/users",
 					"host": [
@@ -60,11 +71,71 @@
 		}
 	],
 	"auth": {
-		"type": "bearer",
-		"bearer": [
+		"type": "oauth2",
+		"oauth2": [
 			{
-				"key": "token",
-				"value": "eyJraWQiOiIxWlhxc1RmZklkWE9xY3l1XC9PRVkwU01yVFMrRHZWYk1EWnBWZXhMVGUxZz0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJkNDI1M2U5NS1iNjZiLTQ5YTctOWQyMC0xZjY3YWVmZTFmM2MiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC5hcC1zb3V0aC0xLmFtYXpvbmF3cy5jb21cL2FwLXNvdXRoLTFfSk04SjhHNzhxIiwiY29nbml0bzp1c2VybmFtZSI6ImNlbmNvc3VkLXVzZXIiLCJvcmlnaW5fanRpIjoiZGNmOTU4NTItZGQ3ZS00NzlmLTg5N2ItYTAzMjFjYWEyYTkwIiwiYXVkIjoiMTY4djdrYmJhcTNnb291Njh2YnEzcTdxZ20iLCJldmVudF9pZCI6IjY3YzFlMzg3LTdiYmEtNGQzNy04NjgyLTZmZDA1NmIwZDFmNyIsInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNjg2ODU5MTg5LCJuYW1lIjoiY2VuY29zdWQiLCJleHAiOjE2ODY4NjI3ODksImlhdCI6MTY4Njg1OTE4OSwianRpIjoiNWFiMjc3NjAtOTJlNC00MGZlLWEzZjMtNzlhYWJlOWIxMTI0IiwiZW1haWwiOiJzbmlnZGhhanlvdGkuY29tbW9uK2NlbmNvc3VkQGdtYWlsLmNvbSJ9.AEaTKvKOjsPiO0sLIKnHiqRxU1vTyUEe69tdxa8nkgIXqR57v1aQbkn1kvn5O-uguejHE_zcy4qJ1TMgqhaNZZTCVg8pOzZ7Xz-EYvyMdKH66iT2LRhDF7bsuip7CvKtrcm-zRhZRS7qjsE_c7gAivDLJstZt7qVTBPH1Hj-thVxn_NHpfmKFs7uvil4Q6BoQFJs_MVYCdgUzx5mE61iyh5INEzu9zbM09E_wCn9jc6EG01cu6SzuIwnGNWT2fJm1uMbx8kcMyFomqiqKWPEdZZfCjaexP36BY4gskW1oue9li6QK8cu8-yuT8G_bUx7ETUSoy71Mn9Zqb-gWD0AfA",
+				"key": "clientId",
+				"value": "hnjd55od0kh8nhd6s1e4oaed6",
+				"type": "string"
+			},
+			{
+				"key": "scope",
+				"value": "aws.cognito.signin.user.admin email openid phone profile",
+				"type": "string"
+			},
+			{
+				"key": "refreshRequestParams",
+				"value": [],
+				"type": "any"
+			},
+			{
+				"key": "tokenRequestParams",
+				"value": [],
+				"type": "any"
+			},
+			{
+				"key": "authRequestParams",
+				"value": [],
+				"type": "any"
+			},
+			{
+				"key": "challengeAlgorithm",
+				"value": "S256",
+				"type": "string"
+			},
+			{
+				"key": "useBrowser",
+				"value": true,
+				"type": "boolean"
+			},
+			{
+				"key": "redirect_uri",
+				"value": "http://localhost:8080/auth/callback",
+				"type": "string"
+			},
+			{
+				"key": "grant_type",
+				"value": "authorization_code",
+				"type": "string"
+			},
+			{
+				"key": "authUrl",
+				"value": "https://cencosudtestuser.auth.us-east-1.amazoncognito.com/oauth2/authorize",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			},
+			{
+				"key": "client_authentication",
+				"value": "body",
+				"type": "string"
+			},
+			{
+				"key": "accessTokenUrl",
+				"value": "https://cencosudtestuser.auth.us-east-1.amazoncognito.com/oauth2/token",
 				"type": "string"
 			}
 		]
@@ -92,7 +163,7 @@
 	"variable": [
 		{
 			"key": "url",
-			"value": "https://qudu7hi3m1.execute-api.ap-south-1.amazonaws.com/DEV",
+			"value": "https://6q2bwtrgnd.execute-api.us-east-1.amazonaws.com/DEV",
 			"type": "string"
 		}
 	]
