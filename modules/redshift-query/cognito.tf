@@ -32,23 +32,6 @@ resource "aws_cognito_user_pool" "rest_api_user_pool" {
   }
 }
 
-resource "aws_cognito_user_pool_client" "rest_api_user_pool_client" {
-  name                = "cencosud-api-user-pool-client"
-  callback_urls = var.identity_provider_callback_urls
-  explicit_auth_flows = [
-    "ALLOW_USER_PASSWORD_AUTH",
-    "ALLOW_REFRESH_TOKEN_AUTH"
-  ]
-  allowed_oauth_flows                  = ["code"]
-  allowed_oauth_flows_user_pool_client = true
-  allowed_oauth_scopes = [
-    "email",
-    "openid",
-    "phone","profile","aws.cognito.signin.user.admin"
-]
-    user_pool_id = aws_cognito_user_pool.rest_api_user_pool.id
-}
-
 // Create an App client
 resource "aws_cognito_user_pool_client" "client" {
   name         = "cencosudtestuser_client"
