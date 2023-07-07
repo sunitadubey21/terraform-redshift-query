@@ -3,12 +3,18 @@ locals {
     "users" = ["GET"]
     "credit_cards" = ["GET"]
     "items" = ["GET"]
+    "user" = ["GET"]
+    "credit_card" = ["GET"]
+    "item" = ["GET"]
   }
 
   redshift_queries = {
     "users" = "SELECT * FROM USERS"
     "credit_cards" = "SELECT * FROM CREDIT_CARDS"
     "items" = "SELECT * FROM ITEMS"
+    "user" = "SELECT * FROM USERS WHERE"
+    "credit_card" = "SELECT * FROM CREDIT_CARDS WHERE"
+    "item" = "SELECT * FROM ITEMS WHERE"
   }
 
   flatten_endpoints = merge([
