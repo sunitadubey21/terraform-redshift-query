@@ -58,6 +58,7 @@ resource "aws_api_gateway_deployment" "api_deployment" {
 
   triggers = {
     redeployment = sha1(jsonencode(aws_api_gateway_rest_api.rest_api.body))
+    endpointChanges = sha1(jsonencode(aws_api_gateway_integration.endpoint_api_integration))
   }
 
   lifecycle {
