@@ -42,3 +42,14 @@ variable "cognito_user_pool_domain" {
   description = "Cognito domain"
   default     = "cencosudtestuser"
 }
+
+variable "query_params" {
+  type = map(string)
+  description = "Query params for user, item and credit_card APIs"
+  default = {
+    "param1" = "value1"
+    "param2" = "value2"
+    "param3" = "value3"
+    "param4" = "value4"
+  }
+}
