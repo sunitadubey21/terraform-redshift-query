@@ -47,9 +47,10 @@ variable "query_params" {
   type = map(string)
   description = "Query params for user, item and credit_card APIs"
   default = {
-    "param1" = "value1"
-    "param2" = "value2"
-    "param3" = "value3"
-    "param4" = "value4"
+    "name" = "name"
+    "email" = "email"
+    "startDate" = "startDate"
+    "endDate" = "endDate"
+    "validity" = "validity"
   }
 }
