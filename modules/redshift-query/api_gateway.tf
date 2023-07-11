@@ -40,6 +40,12 @@ resource "aws_api_gateway_integration" "endpoint_api_integration" {
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
   uri                     = aws_lambda_function.redshift_query_lambda.invoke_arn
+
+  request_parameters = {
+    for key, value in var.query_params :
+    "integration.request.querystring.${key}" => "'${value}'"
+  }
+
 }
 
 resource "aws_api_gateway_deployment" "api_deployment" {
