@@ -29,10 +29,10 @@ resource "aws_iam_role" "cross_account_redshift_role" {
         {
           Action   = "redshift:GetClusterCredentials"
           Effect   = "Allow"
-          # TODO: Will fix the access later. Need to use granular access policy
           Resource = [
             "arn:aws:redshift:${data.aws_region.this.name}:${data.aws_caller_identity.this.account_id}:dbuser:${aws_redshift_cluster.redshift_cluster.cluster_identifier}/${aws_redshift_cluster.redshift_cluster.master_username}",
-            "arn:aws:redshift:${data.aws_region.this.name}:${data.aws_caller_identity.this.account_id}:dbname:${aws_redshift_cluster.redshift_cluster.cluster_identifier}/${aws_redshift_cluster.redshift_cluster.database_name}"]
+            "arn:aws:redshift:${data.aws_region.this.name}:${data.aws_caller_identity.this.account_id}:dbname:${aws_redshift_cluster.redshift_cluster.cluster_identifier}/${aws_redshift_cluster.redshift_cluster.database_name}"
+          ]
         },
       ]
     })

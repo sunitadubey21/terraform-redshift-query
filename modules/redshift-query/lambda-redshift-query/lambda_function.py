@@ -2,7 +2,6 @@ import collections
 import json
 import logging
 import os
-import pprint
 import time
 
 import boto3
@@ -30,7 +29,7 @@ def query_dynamo_db(_full_api_url):
     try:
         response = dynamodb_table.get_item(
             Key={'full_api_url': _full_api_url},
-            AttributesToGet=['redshift_query','redshift_user']
+            AttributesToGet=['redshift_query', 'redshift_user']
         )
     except ClientError as err:
         logger.error(
@@ -46,10 +45,10 @@ def query_dynamo_db(_full_api_url):
         if item:
             return item.get('redshift_query'), item.get('redshift_user')
         else:
-            response None, None
+            raise Exception("Item doesn't exists")
 
 
-def query_redshift(_request_id, queries, user, queryStringParameters=None, db_cluster=None, db_workgroup=None):
+def query_redshift(_request_id, queries, user, query_string_parameters=None, db_cluster=None, db_workgroup=None):
     sts_client = boto3.client('sts')
     assumed_role_object = sts_client.assume_role(
         RoleArn=ASSUME_ROLE_ARN,
@@ -67,15 +66,15 @@ def query_redshift(_request_id, queries, user, queryStringParameters=None, db_cl
     try:
         if db_cluster is not None:
             logger.info("Connecting to cluster: " + db_cluster)
-            # Convert queryStringParameters to a string
-            query_params = json.dumps(queryStringParameters) if queryStringParameters else None
-            # Append query parameters to the SQL query
-            sql_query = queries + ' ' + query_params if query_params else queries
+            sql_query = queries
+            if query_string_parameters is not None and len(query_string_parameters) != 0:
+                sql_query += ' ' + ' AND '.join(
+                    [f'{key} = \'{query_string_parameters[key]}\'' for key in query_string_parameters])
             logger.info("SQL query..." + sql_query)
             response = redshift_data_client.execute_statement(
                 ClusterIdentifier=db_cluster,
                 Database=REDSHIFT_DATABASE,
-                DbUser=user, #REDSHIFT_DATABASE_USER,
+                DbUser=user,  # REDSHIFT_DATABASE_USER,
                 Sql=sql_query,
                 StatementName="QMRNotificationUtility-v%s" % __version__,
                 WithEvent=False
