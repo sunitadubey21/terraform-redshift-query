@@ -1,0 +1,55 @@
+{
+  "resource":"/user",
+  "path":"/user",
+  "httpMethod":"GET",
+  "headers":"None",
+  "multiValueHeaders":"None",
+  "queryStringParameters":{
+    "name":"John",
+    "email":"john@doe.com"
+  },
+  "multiValueQueryStringParameters":{
+    "name":[
+      "John"
+    ],
+    "email":[
+      "john@doe.com"
+    ]
+  },
+  "pathParameters":"None",
+  "stageVariables":"None",
+  "requestContext":{
+    "resourceId":"eiq01j",
+    "resourcePath":"/user",
+    "httpMethod":"GET",
+    "extendedRequestId":"H59gRH8foAMFXEw=",
+    "requestTime":"11/Jul/2023:15:32:17 +0000",
+    "path":"/user",
+    "accountId":"350711180666",
+    "protocol":"HTTP/1.1",
+    "stage":"test-invoke-stage",
+    "domainPrefix":"testPrefix",
+    "requestTimeEpoch":1689089537456,
+    "requestId":"72258bff-5af2-40c2-ac87-445588f7e35a",
+    "identity":{
+      "cognitoIdentityPoolId":"None",
+      "cognitoIdentityId":"None",
+      "apiKey":"test-invoke-api-key",
+      "principalOrgId":"None",
+      "cognitoAuthenticationType":"None",
+      "userArn":"arn:aws:sts::350711180666:assumed-role/Admin/dsunitaw-Isengard",
+      "apiKeyId":"test-invoke-api-key-id",
+      "userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
+      "accountId":"350711180666",
+      "caller":"AROAVDKAD5V5G6QYSQWD4:dsunitaw-Isengard",
+      "sourceIp":"test-invoke-source-ip",
+      "accessKey":"ASIAVDKAD5V5P4KQORUI",
+      "cognitoAuthenticationProvider":"None",
+      "user":"AROAVDKAD5V5G6QYSQWD4:dsunitaw-Isengard"
+    },
+    "domainName":"testPrefix.testDomainName",
+    "apiId":"6q2bwtrgnd"
+  },
+  "body":"None",
+  "isBase64Encoded":false
+}
